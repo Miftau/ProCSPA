@@ -2,65 +2,111 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Price Predictor</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Optional: Add a simple configuration for consistent colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6', // blue-500
+                        primaryDark: '#2563eb', // blue-600
+                        secondary: '#f3f4f6', // gray-100
+                        darkText: '#1f2937', // gray-800
+                        accent: '#10b981', // emerald-500
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-gradient-to-br from-secondary to-gray-200; /* Subtle gradient background */
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
-    <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-3xl">
-        <h1 class="text-2xl font-bold mb-6 text-center text-blue-700">Car Price Predictor</h1>
+<body class="flex flex-col min-h-screen"> <!-- Changed to flex column for footer -->
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center p-4"> <!-- Added p-4 for mobile padding -->
+        <div class="bg-white shadow-xl rounded-2xl p-6 w-full max-w-2xl"> <!-- Adjusted padding and rounded corners -->
+            <h1 class="text-3xl font-bold mb-6 text-center text-primary"> <!-- Increased font size, used primary color -->
+                Car Price Predictor
+            </h1>
 
-        <form method="POST" class="space-y-4">
-            <label class="block text-gray-700 font-medium">Select Car Type:</label>
-            <select name="car_type" id="carType" class="w-full p-2 border rounded" onchange="toggleForm()">
-                <option value="">-- Select --</option>
-                <option value="new">New Car</option>
-                <option value="used">Used Car</option>
-            </select>
+            <form method="POST" class="space-y-5"> <!-- Increased space between elements -->
+                <div> <!-- Wrapped label and select in a div for better structure -->
+                    <label class="block text-lg font-semibold mb-2 text-darkText"> <!-- Increased label size -->
+                        Select Car Type:
+                    </label>
+                    <select name="car_type" id="carType" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200" onchange="toggleForm()"> <!-- Enhanced select styling -->
+                        <option value="">-- Select --</option>
+                        <option value="new">New Car</option>
+                        <option value="used">Used Car</option>
+                    </select>
+                </div>
 
-            <!-- New Car Form -->
-            <div id="newForm" class="hidden space-y-3">
-                <input type="text" name="manufacturer" placeholder="Manufacturer" class="w-full p-2 border rounded">
-                <input type="text" name="model" placeholder="Model" class="w-full p-2 border rounded">
-                <input type="text" name="engine size" placeholder="Engine Size" class="w-full p-2 border rounded">
-                <input type="text" name="fuel type" placeholder="Fuel Type" class="w-full p-2 border rounded">
-                <input type="number" name="year of manufacture" placeholder="Year of Manufacture" class="w-full p-2 border rounded">
-                <input type="number" step="0.01" name="mileage" placeholder="Mileage" class="w-full p-2 border rounded">
-            </div>
+                <!-- New Car Form -->
+                <div id="newForm" class="hidden space-y-4"> <!-- Increased space between inputs -->
+                    <input type="text" name="manufacturer" placeholder="Manufacturer" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    <input type="text" name="model" placeholder="Model" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    <input type="text" name="engine size" placeholder="Engine Size (L)" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    <input type="text" name="fuel type" placeholder="Fuel Type" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    <input type="number" name="year of manufacture" placeholder="Year of Manufacture" min="1900" max="2030" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    <input type="number" step="0.01" name="mileage" placeholder="Mileage (km)" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                </div>
 
-            <!-- Used Car Form -->
-            <div id="usedForm" class="hidden space-y-3">
-                <input type="text" name="brand" placeholder="Brand" class="w-full p-2 border rounded">
-                <input type="text" name="model" placeholder="Model" class="w-full p-2 border rounded">
-                <input type="text" name="engine" placeholder="Engine" class="w-full p-2 border rounded">
-                <input type="text" name="fuel_type" placeholder="Fuel Type" class="w-full p-2 border rounded">
-                <input type="number" name="model_year" placeholder="Model Year" class="w-full p-2 border rounded">
-                <input type="number" step="0.01" name="milage" placeholder="Mileage" class="w-full p-2 border rounded">
-                <select name="accident" class="w-full p-2 border rounded">
-                    <option value="">Has Accident?</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                </select>
-                <select name="clean_title" class="w-full p-2 border rounded">
-                    <option value="">Clean Title?</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                </select>
-                <input type="text" name="transmission" placeholder="Transmission" class="w-full p-2 border rounded">
-                <input type="text" name="ext_col" placeholder="Exterior Color" class="w-full p-2 border rounded">
-                <input type="text" name="int_col" placeholder="Interior Color" class="w-full p-2 border rounded">
-            </div>
+                <!-- Used Car Form -->
+                <div id="usedForm" class="hidden space-y-4"> <!-- Increased space between inputs -->
+                    <input type="text" name="brand" placeholder="Brand" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    <input type="text" name="model" placeholder="Model" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    <input type="text" name="engine" placeholder="Engine (e.g., 2.0L)" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    <input type="text" name="fuel_type" placeholder="Fuel Type" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    <input type="number" name="model_year" placeholder="Model Year" min="1900" max="2030" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    <input type="number" step="0.01" name="milage" placeholder="Mileage (km)" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    <select name="accident" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                        <option value="">Has Accident?</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    <select name="clean_title" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                        <option value="">Clean Title?</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    <input type="text" name="transmission" placeholder="Transmission" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    <input type="text" name="ext_col" placeholder="Exterior Color" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                    <input type="text" name="int_col" placeholder="Interior Color" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200">
+                </div>
 
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Predict Price</button>
-        </form>
-    </div>
+                <button type="submit" class="w-full bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primaryDark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition duration-200 shadow-md hover:shadow-lg"> <!-- Made button full width, added shadow and hover effects -->
+                    Predict Price
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-auto"> <!-- mt-auto pushes footer to bottom -->
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>&copy; 2025 Car Price Predictor. All rights reserved.</p>
+            <p class="mt-2 text-gray-400 text-sm">Predict car prices with ease. Accuracy may vary.</p>
+        </div>
+    </footer>
 
     <script>
         function toggleForm() {
             const type = document.getElementById("carType").value;
             document.getElementById("newForm").classList.add("hidden");
             document.getElementById("usedForm").classList.add("hidden");
-            if (type === "new") document.getElementById("newForm").classList.remove("hidden");
-            else if (type === "used") document.getElementById("usedForm").classList.remove("hidden");
+            if (type === "new") {
+                document.getElementById("newForm").classList.remove("hidden");
+            } else if (type === "used") {
+                document.getElementById("usedForm").classList.remove("hidden");
+            }
         }
     </script>
 </body>

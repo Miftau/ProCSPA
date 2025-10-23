@@ -34,15 +34,16 @@ def index():
             features = {
                 "brand": request.form.get("brand"),
                 "model": request.form.get("model"),
-                "engine": request.form.get("engine"),
-                "fuel_type": request.form.get("fuel_type"),
                 "model_year": int(request.form.get("model_year")),
                 "milage": float(request.form.get("milage")),
-                "accident": request.form.get("accident"),
-                "clean_title": request.form.get("clean_title"),
+                "fuel_type": request.form.get("fuel_type"),
+                "engine": request.form.get("engine"),
                 "transmission": request.form.get("transmission"),
                 "ext_col": request.form.get("ext_col"),
                 "int_col": request.form.get("int_col"),
+                "accident": request.form.get("accident"),
+                "clean_title": request.form.get("clean_title"),
+                
             }
             df = pd.DataFrame([features])
             encoded = encoder_used.transform(df)
